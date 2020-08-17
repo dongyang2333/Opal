@@ -8,27 +8,23 @@
     <name>Opal-1.0-SNAPSHOT</name>
     
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
         <endorsed.dir>${project.build.directory}/endorsed</endorsed.dir>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <failOnMissingWebXml>false</failOnMissingWebXml>
-        <jakartaee>8.0</jakartaee>
     </properties>
     
     <dependencies>
-        <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>7.0</version>
-            <scope>provided</scope>
-        </dependency>
         <dependency>
             <groupId>com.google.appengine</groupId>
             <artifactId>appengine-api-1.0-sdk </artifactId>
             <version>1.9.65</version>
         </dependency>
-    
+
+         <dependency>
+            <groupId>javax</groupId>
+            <artifactId>javaee-api</artifactId>
+            <version>7.0</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>jstl</artifactId>
@@ -50,13 +46,13 @@
                 <configuration>
                     <enableJarClasses>false</enableJarClasses>
                     <port>8181</port>
-                    <address>0.0.0.</address>
+                    <address>0.0.0.0</address>
                 </configuration>
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.1</version>
+                <version>3.8.0</version>
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
@@ -71,6 +67,17 @@
                 <version>2.3</version>
                 <configuration>
                     <failOnMissingWebXml>false</failOnMissingWebXml>
+                <webResource>
+                    <resource>
+                        <directory>src</directory>
+                        <targetPath>WEB-INF</targetPath>
+                        <includes>
+                            <include>jax-ws-catalog.xml</include>
+                            <include>wsdl/**</include>
+                        </includes>
+                    </resource>
+                </webResource>
+
                 </configuration>
             </plugin>
             <plugin>
@@ -79,25 +86,23 @@
                 <version>2.6</version>
                 <executions>
                     <execution>
-                        <phase>validate</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>copy</goal>
                         </goals>
                         <configuration>
-                            <outputDirectory>${endorsed.dir}</outputDirectory>
-                            <silent>true</silent>
-                            <artifactItems>
-                                <artifactItem>
-                                    <groupId>javax</groupId>
-                                    <artifactId>javaee-api</artifactId>
-                                    <version>${jakartaee}</version>
-                                    <type>jar</type>
-                                </artifactItem>
-                            </artifactItems>
+                        <artifactItems>
+                        <artifactItem>
+                        <groupId>com.github.jsimons</groupId>
+                        <artifactId>webapp-runner</artifactId>
+                        <version>8.0.30.2</version>
+                        <destFileName>webapp-runner.jar</destFileName>
+                        </artifactItem>
+                        </artifactItems>
                         </configuration>
-                    </execution>
-                </executions>
-            </plugin>
+                        </execution>
+                        </executions>
+                        </plugin>                          
         </plugins>
     </build>
 </project>
